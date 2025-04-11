@@ -143,29 +143,29 @@ public class BinaryTree <T> {
     /*entreNiveles(int n, m) Imprime el recorrido por niveles de los elementos del árbol
     		receptor entre los niveles n y m (ambos inclusive). (0≤n<m≤altura del árbol)*/
     public void entreNiveles(int n, int m){
-        	BinaryTree<T> ab = null;
-        	Queue<BinaryTree<T>> cola = new Queue<BinaryTree<T>>();
-        	int soygay = 0;
-        	cola.enqueue(this);
-        	cola.enqueue(null);
-        	while (!cola.isEmpty()) {
-        		ab = cola.dequeue();
-        		if (ab != null) {
-        			if(soygay>=n && soygay<=m) {
-        				System.out.print(ab.getData());
-        				if (ab.hasLeftChild()) {
-        					cola.enqueue(ab.getLeftChild());
-        				}
-        				if (ab.hasRightChild()) {
-        					cola.enqueue(ab.getRightChild());
-        				}
+    	BinaryTree<T> ab = null;
+        Queue<BinaryTree<T>> cola = new Queue<BinaryTree<T>>();
+        int soygay = 0;
+        cola.enqueue(this);
+        cola.enqueue(null);
+        while (!cola.isEmpty()) {
+      		ab = cola.dequeue();
+        	if (ab != null) {
+        		if(soygay>=n && soygay<=m) {
+        			System.out.print(ab.getData());
+        			if (ab.hasLeftChild()) {
+        				cola.enqueue(ab.getLeftChild());
         			}
-        		} else if (!cola.isEmpty()) {
-        			System.out.println();
-        			cola.enqueue(null);
-        			soygay++;
+        			if (ab.hasRightChild()) {
+        				cola.enqueue(ab.getRightChild());
+        			}
         		}
+        	} else if (!cola.isEmpty()) {
+        		System.out.println();
+        		cola.enqueue(null);
+			soygay++;
         	}
+        }
     }
    
 		
