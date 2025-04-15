@@ -33,7 +33,7 @@ public class ParcialArboles {
         boolean aux = false;
         int cantI = 0;
         int cantD = 0;
-        BinaryTree<Integer> ab = buscar(this,num);
+        BinaryTree<Integer> ab = buscar(this.arbol,num);
         if(ab.isLeaf())
         	return false;
         if(ab.hasLeftChild()&&ab.hasRightChild()) {
