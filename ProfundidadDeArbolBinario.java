@@ -55,6 +55,6 @@ public class ProfundidadDeArbolBinario {
         BinaryTree<Integer> hijoDerecho= new BinaryTree<Integer>(78);
         ab.addLeftChild(hijoIzquierdo);
         ab.addRightChild(hijoDerecho);
-        System.out.println("\nTotal: "+sumaElementosProfundidad(1,ab));
+        System.out.println("\nTotal: "+sumaElementosProfundidad(2,ab));
     }
 }
