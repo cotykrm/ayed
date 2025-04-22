@@ -185,5 +185,35 @@ public class BinaryTree <T> {
             }
         }
     }
+    
+    public boolean lleno() {
+        BinaryTree<T> ab = null;
+        Queue<BinaryTree<T>> cola = new Queue<BinaryTree<T>>();
+        boolean lleno = true;
+        int cant_nodos = 0;
+        int nivel = 0;
+        cola.enqueue(this);
+        cola.enqueue(null);
+        while (!cola.isEmpty() && lleno) {
+            ab = cola.dequeue();
+            if (ab != null) {
+                if (ab.hasLeftChild()) {
+                    cola.enqueue(ab.getLeftChild());
+                    cant_nodos++;
+                }
+                if (ab.hasRightChild()) {
+                    cola.enqueue(ab.getRightChild());
+                    cant_nodos++;
+                }
+            } else if (!cola.isEmpty()) {
+                if (cant_nodos == Math.pow(2, ++nivel)) {
+                    cola.enqueue(null);
+                    cant_nodos = 0;
+                } else
+                    lleno = false;
+            }
+        }
+        return lleno;
+}
 }
 
