@@ -194,7 +194,38 @@ se encuentran en el nivel que posee la mayor cantidad de nodos.*/
         /*Se dice que un nodo n es ancestro de un nodo m si existe un camino desde n a m. Implemente un
 método en la clase GeneralTree con la siguiente firma:
 public boolean esAncestro(T a, T b): devuelve true si el valor “a” es ancestro del valor “b”.*/
+        private GeneralTree<T> buscar (GeneralTree<T> ab, T a){
+            if(ab == null  || ab.isEmpty()){
+                return null;
+            }
+            if(ab.getData().equals(a))
+                return ab;
+            if(ab.hasChildren()){
+                List<GeneralTree<T>> children = ab.getChildren(); 
+                for(GeneralTree<T> child :  children){
+                    GeneralTree<T> result = buscar(child, a); // Llamada recursiva
+                    if (result != null) {
+                        return result; // Si se encuentra el nodo, se retorna
+                    }
+                }
+            }
+            return null;
+
+        }
+
         public boolean esAncestro(T a, T b){
+            if(this == null || !this.hasChildren()){
+                return false;
+            }
+            GeneralTree<T> buscado = buscar(this, a);
+            if(buscado == null || !buscado.hasChildren())
+                return false;
+            GeneralTree<T>buscadoB = buscar(buscado, b);
+            
+            if(buscadoB == null)
+                return false;
+            else
+                return true;
             
         }
 }
