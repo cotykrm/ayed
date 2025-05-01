@@ -23,27 +23,27 @@ public class RecorridosAG {
     pasados como parámetros, recorrido en preorden.*/
 		
     private static boolean esImpar(Integer n) {
-	if(n%2 != 0)
+	    if(n%2 != 0)
             return true;
-	else
+	    else
             return false;
 	}
 		
 		
 		
     private void nimqpo(GeneralTree <Integer> a, Integer n, List<Integer> impares) {
-	if(esImpar(a.getData()) && a.getData()>n)
+	    if(esImpar(a.getData()) && a.getData()>n)
             impares.add(a.getData());
         List<GeneralTree<Integer>> children = a.getChildren();
-	for (GeneralTree<Integer> child: children) {
+	    for (GeneralTree<Integer> child: children) {
             nimqpo(child,n,impares);	
-	}
+	    }
     }
 		
     public List<Integer> numerosImparesMayoresQuePreOrden (GeneralTree <Integer> a,
-	Integer n){
-	List<Integer> impares = new ArrayList<Integer>();
-	if(a == null || a.isEmpty())
+	    Integer n){
+	    List<Integer> impares = new ArrayList<Integer>();
+	    if(a == null || a.isEmpty())
             return impares;
         nimqpo(a,n,impares);
 		
@@ -51,12 +51,12 @@ public class RecorridosAG {
     }
 	
     private void nimqio(GeneralTree <Integer> a, Integer n, List<Integer> impares) {
-	if(esImpar(a.getData()) && a.getData()>n)
+	    if(esImpar(a.getData()) && a.getData()>n)
             impares.add(a.getData());
-	List<GeneralTree<Integer>> children = a.getChildren();
-	for (GeneralTree<Integer> child: children) {
+        List<GeneralTree<Integer>> children = a.getChildren();
+	    for (GeneralTree<Integer> child: children) {
             nimqpo(child,n,impares);	
-	}
+	    }
     }
 		
     public List<Integer> numerosImparesMayoresQueInOrden (GeneralTree <Integer> a,Integer n){

@@ -41,15 +41,17 @@ public class GeneralTreeTest {
 		for(Integer num : impares) {
 			System.out.println(num);
 		}
-                */
                 
-                System.out.println("Árbol: ");
-                a.porNiveles();
                 
-                System.out.println("altura: "+a.altura());
-                System.out.println("nivel: "+a.nivel(21));
-                System.out.println("ancho: "+a.ancho());
-                
+    	System.out.println("Árbol: ");
+        a.porNiveles();
+        System.out.println("altura: "+a.altura());
+        System.out.println("nivel: "+a.nivel(21));
+        System.out.println("ancho: "+a.ancho());
+		System.out.println("Es ancestro?"+a.esAncestro(0,12 ));
+
+		*/
+            
                 
 	}
 }
