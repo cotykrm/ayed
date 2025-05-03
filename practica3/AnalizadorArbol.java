@@ -26,7 +26,6 @@ public class AnalizadorArbol {
         if(arbol != null && !arbol.isEmpty()){
             GeneralTree<AreaEmpresa> tree_aux;
             Queue<GeneralTree<AreaEmpresa>> queue = new Queue<GeneralTree<AreaEmpresa>>();
-            //int nivel = 0;
             double promedio;
             int cantNodos = 0;
             int suma = 0;       
