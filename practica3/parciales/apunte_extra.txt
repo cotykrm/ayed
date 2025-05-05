@@ -1,0 +1,22 @@
+Pasos para analizar y resolver ejercicios prácticos de árboles binarios y generales:
+
+1*Leer con atención el enunciado. Asegurarte de saber qué tipo de resultado se espera 
+(recorrido, búsqueda, camino, validación, etc).
+
+2*Pensar casos base. Analizar qué ocurre en situaciones simples como árbol vacío o 
+con un solo nodo, o null, o lo que drbo retornar.
+
+3*Modelar si hace falta (pensar en objetos). Definir clases o estructuras, si el 
+árbol no está dado. Considerar atributos como valor, hijos, padre, etc.
+
+4*Pensar qué tipo de recorrido es mejor. Evaluar si conviene usar: 
+Recorrido en profundidad: preorden, inorden, postorden o Recorrido por niveles.
+ - para caminos y comparacion de arboles, sirven los recorridos recursivos 
+(para comparacion de varios arboles)
+ - Puede ser el caso de necesitar hacer un recorrido en profundidad, para retornar 
+un camino, por ejemplo, y a su vez, llevar un contador de nivel. o de nodos por nivel.
+
+5*Pensar si hace falta una estructura auxiliar y crear métodos privados. 
+Por ejemplo: pilas, colas, listas o funciones auxiliares recursivas/iterativas.
+
+
