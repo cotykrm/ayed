@@ -19,4 +19,118 @@ un camino, por ejemplo, y a su vez, llevar un contador de nivel. o de nodos por 
 5*Pensar si hace falta una estructura auxiliar y crear métodos privados. 
 Por ejemplo: pilas, colas, listas o funciones auxiliares recursivas/iterativas.
 
+----------------------------------------------------------------------------------------------------
+
+Apunte Recursión: 
+
+El retorno de variables en métodos recursivos es fundamental para propagar resultados a través 
+de las llamadas recursivas. Aquí te explico cómo funciona y cómo usarlo correctamente:
+
+1. Cómo funciona el retorno en recursión
+Cuando un método recursivo se llama a sí mismo:
+
+Cada llamada recursiva tiene su propio contexto (su propia pila de ejecución).
+El valor retornado por una llamada recursiva se pasa de vuelta a la llamada anterior.
+Este proceso continúa hasta que todas las llamadas recursivas se resuelven.
+El retorno se utiliza para:
+
+Propagar un resultado acumulado hacia la llamada inicial.
+Comparar o combinar resultados de diferentes ramas de la recursión.
+2. Ejemplo básico: Suma de números
+Supongamos que queremos sumar los números de 1 a n usando recursión:
+
+public int suma(int n) {
+    if (n == 1) {
+        return 1; // Caso base: la suma de 1 es 1
+    }
+    return n + suma(n - 1); // Retorna el número actual más el resultado de la llamada recursiva
+}
+
+Flujo de ejecución para suma(4):
+
+suma(4) llama a suma(3) y espera el resultado.
+suma(3) llama a suma(2) y espera el resultado.
+suma(2) llama a suma(1) y espera el resultado.
+suma(1) retorna 1 (caso base).
+suma(2) retorna 2 + 1 = 3.
+suma(3) retorna 3 + 3 = 6.
+suma(4) retorna 4 + 6 = 10.
+
+
+ Ejemplo con comparación: Encontrar el mínimo
+En un árbol, queremos encontrar el valor mínimo usando recursión:
+
+public int encontrarMinimo(Node nodo) {
+    if (nodo == null) {
+        return Integer.MAX_VALUE; // Caso base: si el nodo es nulo, retorna un valor muy grande
+    }
+    int minimoIzquierdo = encontrarMinimo(nodo.izquierdo); // Llama recursivamente al hijo izquierdo
+    int minimoDerecho = encontrarMinimo(nodo.derecho); // Llama recursivamente al hijo derecho
+    return Math.min(nodo.valor, Math.min(minimoIzquierdo, minimoDerecho)); // Retorna el mínimo
+}
+
+Flujo de ejecución:
+
+Cada llamada recursiva compara el valor del nodo actual con los valores mínimos de sus subárboles.
+El valor mínimo se propaga hacia arriba hasta la raíz.
+
+
+Define un caso base: Asegúrate de que la recursión termine en algún punto (por ejemplo, cuando 
+llegues a una hoja o un nodo nulo).
+Usa el valor retornado: Siempre utiliza el valor retornado por las llamadas recursivas para 
+realizar cálculos o comparaciones.
+Combina resultados: Si tienes múltiples ramas (como en un árbol), combina los resultados de 
+las llamadas recursivas (por ejemplo, usando Math.min o sumando valores).
+Propaga el resultado: Asegúrate de que el resultado final se propague hacia la llamada inicial.
+
+Errores comunes
+No usar el valor retornado: Si no usas el valor retornado por una llamada recursiva, perderás 
+el resultado de esa rama.
+Modificar variables primitivas directamente: Los cambios en variables primitivas dentro de una 
+llamada recursiva no se reflejan en otras llamadas. Usa el retorno para propagar resultados.
+Falta de caso base: Sin un caso base, la recursión puede volverse infinita y causar un 
+desbordamiento de pila.
+Resumen
+El retorno en métodos recursivos es clave para propagar resultados hacia la llamada inicial. 
+En tu caso, cada nodo debe retornar el caudal mínimo de su subárbol, y los nodos intermedios 
+deben combinar los resultados de sus hijos para encontrar el mínimo global.
+
+------------------------------------------------------------------------------------------------
+
+Árboles de Expresión. 
+Resoluciones:
+
+Evalúe la siguiente expresión postfija y determine cuál es el resultado.
+6 5 * 7 3 − 4 8 + * +
+
+1. Inicializa una pila vacía.
+2. Lee la expresión de izquierda a derecha.
+3. Para cada símbolo:
+  Si es un número, apílalo (guárdalo en la pila);
+  Si es un operador (+, -, *, /):
+4. Desapila los dos últimos números (el segundo que sacás será el operando izquierdo).
+5. Aplica el operador.
+6. Apila el resultado nuevamente.
+
+Al finalizar, el único número en la pila es el resultado de la expresión.
+
+Aplicamos los pasos con tu ejemplo:
+Expresión postfija:
+6 5 * 7 3 - 4 8 + * +
+Paso a paso:
+----------------------------------------------------------------------------------
+| Símbolo | Acción                                      | Pila                   |
+|---------|---------------------------------------------|------------------------|
+| 6       | Número → apilar                             | [6]                    |
+| 5       | Número → apilar                             | [6, 5]                 |
+| *       | 6 * 5 = 30 → desapilar, operar, apilar      | [30]                   |
+| 7       | Número → apilar                             | [30, 7]                |
+| 3       | Número → apilar                             | [30, 7, 3]             |
+| -       | 7 - 3 = 4 → desapilar, operar, apilar       | [30, 4]                |
+| 4       | Número → apilar                             | [30, 4, 4]             |
+| 8       | Número → apilar                             | [30, 4, 4, 8]          |
+| +       | 4 + 8 = 12 → desapilar, operar, apilar      | [30, 4, 12]            |
+| *       | 4 * 12 = 48 → desapilar, operar, apilar     | [30, 48]               |
+| +       | 30 + 48 = 78 → desapilar, operar, apilar    | [78]                   |
+----------------------------------------------------------------------------------
 
