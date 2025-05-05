@@ -1,0 +1,248 @@
+Arboles Binarios y Generales:
+
+● Profundidad: de ni es la longitud del único camino desde la raíz hasta ni. (La raíz tiene profundidad 0) (nivel)
+
+● Camino: desde n₁ hasta nk es una secuencia de nodos n₁, n₂, ..., nk tal que ni es el padre de ni+1 para 1 ≤ i < k.
+
+● Grado: Número de hijos del nodo ni.
+
+● Altura: de ni es la longitud del camino más largo desde ni hasta una hoja l (las hojas tienen altura 0) (la altura de un árbol es la de la raíz)
+
+● Ancestro / Descendiente: si existe un camino desde ni a nz, se dice que ni es ancestro de nz, y nz es descendiente de ni.
+
+● Arboles Binarios:
+
+● Árbol binario lleno:
+Dado un árbol binario T de altura h, diremos que T es lleno si cada nodo interno tiene grado 2 y todas las hojas están en el mismo nivel (h).
+
+● Cantidad de nodos en un árbol binario lleno:
+Sea T un árbol binario lleno de altura h, la cantidad de nodos N es (2^h+1 - 1)
+
+● Árbol binario completo:
+Dado un árbol binario T de altura h, diremos que T es completo si es lleno en h-1 y el nivel h se completa de izq a der.
+
+● Cantidad de nodos en un árbol binario completo:
+Sea T un árbol binario completo de altura h, la cantidad de nodos N varía entre 2^h y 2^(h+1) - 1.
+
+
+Recorridos
+
+● Preorden: Se procesa primero la raíz, luego el hijo izquierdo y por último el hijo derecho.
+● Inorden: Se procesa primero el hijo izquierdo, luego la raíz y por último el hijo derecho.
+● Postorden: Se procesan primero los hijos iquierdo y derecho, y luego la raíz
+● Por niveles: Se procesan los nodos teniendo en cuenta sus niveles, primero la raíz, luego los hijos, los hijos de éstos, etc.
+
+
+● Arboles Generales:
+
+● Definicion: Un árbol es una colección de nodos, tal que:
+ puede estar vacía. (Árbol vacío) o
+ puede estar formada por un nodo distinguido R, llamado raíz y un conjunto de árboles T1, T2, ….Tk, k≥0 (subárboles), 
+donde la raíz de cada subárbol Ti está conectado a R por medio de una arista.
+
+● Árbol lleno: 
+Dado un árbol T de grado k y altura h, diremos que T es lleno si cada nodo interno tiene grado k y todas las hojas están en el mismo
+nivel (h).
+ Es decir, recursivamente, T es lleno si :
+ 1.- T es un nodo simple ( árbol lleno de altura 0), o
+ 2.- T es de altura h y todos sus sub-árboles son llenos de altura h-1.
+
+● Cantidad de nodos en un árbol lleno:
+Sea T un árbol lleno de grado k y altura h, la cantidad de nodos N es (k h+1 – 1) / (k-1)
+
+● Árbol completo: 
+Dado un árbol T de grado k y altura h, diremos que T es completo si es lleno de altura h-1 y el nivel h se completa de izquierda a derecha.
+
+● Cantidad de nodos en un árbol completo:
+Sea T un árbol completo de grado k y altura h, la cantidad de nodos N varía entre (k h +k -2) / (k-1) y (k h+1 – 1) / (k-1)
+
+Recorridos
+● Preorden: Se procesa primero la raíz y luego los hijos
+● Inorden: Se procesa el primer hijo, luego la raíz y por último los restantes hijos
+● Postorden: Se procesan primero los hijos y luego la raíz
+● Por niveles: Se procesan los nodos teniendo en cuenta sus niveles, primero la raíz, luego los hijos, los hijos de éstos, etc.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+HEAP
+
+● Cola de prioridad:
+
+Una cola de prioridad es una estructura de datos que permite al menos dos operaciones:
+• Insert
+Inserta un elemento en la estructura.
+• DeleteMin
+Encuentra, recupera y elimina el elemento mínimo.
+
+● Implementaciones:
+
+Lista Ordenada
+• Insert tiene O(N) operaciones.
+• DeleteMin tiene O(1) operaciones.
+
+Lista no ordenada
+• Insert tiene O(1) operaciones.
+• DeleteMin tiene O(N) operaciones.
+
+Árbol Binario de Búsqueda
+• Insert y DeleteMin tienen en promedio O(log N) operaciones.
+
+● Heap Binaria:
+
+Es una implementación de colas de prioridad que no usa punteros y permite implementar ambas operaciones con O(log N) operaciones en el peor caso
+
+•  Propiedades:
+
+Propiedad estructural:
+Una heap es un árbol binario completo.
+
+En un árbol binario lleno de altura h, los nodos internos tienen exactamente 2 hijos y las hojas tienen la misma profundidad
+
+Un árbol binario completo de altura h es un árbol binario lleno de altura h-1 y en el nivel h, los nodos se completan de izquierda a derecha
+
+El número de nodos n de un árbol binario completo de altura h, satisface:
+2^h ≤ n ≤ (2^(h+1)-1)
+Demostración:
+• Si el árbol es lleno, n = (2^(h+1)-1)
+• Si no, el árbol es lleno en la altura h-1 y tiene por lo menos un nodo en el nivel h:
+n = (2^(h+1-1)-1+1 = 2^h
+-1+1=2h
+La altura h del árbol es de O(log n)
+
+Dado que un árbol binario completo es una estructura de datos regular, puede almacenarse en un arreglo, tal que:
+✔La raíz está almacenada en la posición 1
+✔Para un elemento que está en la posición i:
+• El hijo izquierdo está en la posición 2*i
+• El hijo derecho está en la posición 2*i + 1
+• El padre está en la posición [i/2]
+
+Propiedad de orden:
+
+MinHeap
+• El elemento mínimo está almacenado en la raíz
+• El dato almacenado en cada nodo es menor o igual al de sus hijos (cada hijo es menor que el nodo padre)
+⮚MaxHeap
+• El elemento máximo está almacenado en la raíz
+• El dato almacenado en cada nodo es mayor o igual al de sus hijos (cada hijo es mayor que el nodo padre)
+
+• Implementación de Heap
+
+Una heap H consta de:
+⮚ Un arreglo que contiene los datos
+⮚ Un valor (cabecera) que me indica el número de elementos almacenados
+Ventaja:
+✔ No se necesita usar punteros
+✔ Fácil implementación de las operaciones
+
+Operaciones:
+
+Insert
+⮚ El dato se inserta como último ítem en la heap
+⮚ La propiedad de la heap puede ser violada
+⮚ Se debe hacer un filtrado hacia arriba para restaurar la propiedad de orden
+
+Codígo:
+
+    insert (Heap h, Comparable x) {
+        h.tamaño = h.tamaño + 1;
+        n = h.tamaño;
+        while ( n / 2 > 0 & h.dato[n/2] > x ) {
+            h.dato[n] = h.dato[n/2];
+            n = n/2;
+        }
+        h.dato[n] = x; // ubicación correcta de “x”
+    } 
+     
+Percolate Up (Filtrado hacia arriba):
+⮚ El filtrado hacia arriba restaura la propiedad de orden intercambiando k a lo largo del camino hacia arriba desde el lugar de inserción
+⮚ El filtrado termina cuando la clave k alcanza la raíz o un nodo cuyo padre tiene una clave menor
+⮚ Ya que el algoritmo recorre la altura de la heap, tiene O(log n) intercambios
+
+Codígo:
+
+    percolate_up (Heap h, Integer i) {
+        temp = h.dato[i];
+        while (i/2 > 0 & h.dato[i/2] > temp ) {
+            h.dato[i] = h.dato[i/2];
+            i = i/2;
+        }
+        h.dato[ i ] = temp; // ubicación correcta del elemento a filtrar
+    }
+
+
+Resultado:
+
+    insert (Heap h, Comparable x) {
+        h.tamaño = h.tamaño + 1;
+        h.dato[h.tamaño] = x;
+        percolate_up ( h , h.tamaño )
+    }
+     
+     
+DeleteMin
+⮚ Guardo el dato de la raíz
+⮚ Elimino el último elemento y lo almaceno en la raíz
+⮚ Se debe hacer un filtrado hacia abajo para restaurar la propiedad de orden
+
+Codígo:
+
+    delete_min (Heap h, Comparable e) {
+        if(!h.isEmpty()){
+            e:= h.getData[i];
+            candidato:= h.tamaño;
+            h.tamaño = h.tamaño - 1;
+            p = 1;
+            stpPerc = false;
+            while ( 2*p <= h.tamaño) && (not stpPerc) {
+                h_mim = 2 * p; //buscar al hijo menor
+                if(h_min<>h.tamaño //como existe el hijo derecho comparo ambos
+                    if ( h.dato[h_min +1] < h.dato[h_min] )   
+                        h_min = h_min + 1;
+                if(candidato > h.dato[h_min]{
+                    h.dato[p] = h.dato[h_min];
+                    p = h_min;
+                }
+                else
+                    stp_perc = true;
+            }
+            h.dato[p] = candidato;
+        }
+    }
+     
+     
+PercolateDown (Filtrado hacia abajo):
+⮚ Es similar al filtrado hacia arriba
+⮚ El filtrado hacia abajo restaura la propiedad de orden intercambiando el dato de la raíz hacia abajo a lo largo del
+camino que contiene los hijos mínimos
+⮚ El filtrado termina cuando se encuentra el lugar correcto dónde insertarlo
+⮚ Ya que el algoritmo recorre la altura de la heap, tiene O(log n) operaciones de intercambio.
+
+Codígo:
+    percolate_down ( Heap h, int p) {
+        candidato := h.dato[ p ]
+        stop_perc := false;
+        while ( 2* p <= h.tamaño ) and ( not stop_perc) {
+            h_min := 2 * p; // buscar el hijo con clave menor
+            if h_min <> h.tamaño
+                if ( h.dato[h_min +1] < h.dato[h_min] )
+                    h_min := h_min + 1;
+            if candidato > h.dato [h_min] { // percolate_down
+                h.dato [p] := h.dato[ h_min ]
+                p := h_min;
+            }
+            else stop_perc := true;
+        } 
+        h.dato[p] := candidato;
+    } 
+
+Resultado:
+    delete_min(Heap h, Comparable e){
+        if(h.tamaño>0){
+            e = h.dato[1];
+            h.dato[1] = h.dato[h.tamaño];
+            h.tamaño = h.tamaño - 1;
+            percolate_down(h,1);
+        }
+    }
+
+    
