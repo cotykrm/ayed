@@ -105,8 +105,7 @@ El número de nodos n de un árbol binario completo de altura h, satisface:
 Demostración:
 • Si el árbol es lleno, n = (2^(h+1)-1)
 • Si no, el árbol es lleno en la altura h-1 y tiene por lo menos un nodo en el nivel h:
-n = (2^(h+1-1)-1+1 = 2^h
--1+1=2h
+n = (2^(h+1-1)-1+1 = 2^h-1+1 = 2h
 La altura h del árbol es de O(log n)
 
 Dado que un árbol binario completo es una estructura de datos regular, puede almacenarse en un arreglo, tal que:
@@ -245,4 +244,66 @@ Resultado:
         }
     }
 
-    
+¿Cómo construir una heap a partir de una lista de elementos?  
+
+Para construir una heap a partir de una lista de n elementos:
+✓ Se pueden insertar los elementos de a uno -> se realizan (n log n) operaciones en total
+✓ Se puede usar un algoritmo de orden lineal, es decir, proporcional a los n elementos -> BuildHeap
+ ➢ Insertar los elementos desordenados en un árbol binario completo
+ ➢ Filtrar hacia abajo cada uno de elementos
+
+Algoritmo BuildHeap
+➢Para filtrar:
+ ➢se elige el menor de los hijos
+ ➢se compara el menor de los hijos con el padre
+
+➢Se empieza filtrando desde el elemento que está en la posición (tamaño/2):
+ ➢se filtran los nodos que tienen hijos
+ ➢el resto de los nodos son hojas
+
+
+Cantidad de operaciones requeridas
+
+➢En el filtrado de cada nodo recorremos su altura
+➢Para acotar la cantidad de operaciones (tiempo de ejecución) del algoritmo BuildHeap, debemos calcular la suma de las 
+alturas de todos los nodos
+
+
+Teorema:
+En un árbol binario lleno de altura h que contiene 2^(h+1) – 1 nodos, la
+suma de las alturas de los nodos es: 2^(h+1) – 1 – (h + 1)
+Demostración:
+Un árbol tiene 2i nodos de altura h – i
+
+    h
+S = Σ   2i^(h-i)
+   i=0
+
+S = h + 2 (h-1) + 4 (h-2) + 8 (h-3) + ………2^(h-1) (1)  <-- A
+2S = 2h + 4 (h-1) + 8 (h-2) + 16 (h-3) + ………. + 2h (1) <-- B
+
+Restando las dos igualdades (B) – (A)
+
+S = -h + 2 (h-(h-1)) + 4((h-1)-(h-2)) + 8 ((h-2)-(h-3)) + …+ 2^(h-1)(2-1)+ 2^h
+S = -h + 2 + 4 + 8 + 16 + ………+ 2^(h-1) + 2^h
+S + 1 = -h + 1 + 2 + 4 + 8 + 16 + ………+ 2^(h-1) + 2^h
+S + 1 = -h + (2^(h+1) – 1)
+S = (2^(h+1) – 1) – (h + 1)
+
+➢ Un árbol binario completo no es un árbol binario lleno, pero el resultado obtenido es una cota superior de la suma 
+de las alturas de los nodos en un árbol binario completo
+➢ Un árbol binario completo tiene entre 2^h y 2^(h+1)- 1 nodos, el teorema implica que esta suma es de O(n)
+donde n es el número de nodos.
+➢ Este resultado muestra que la operación BuildHeap es lineal
+
+Ordenación de vectores usando Heap
+
+Dado un conjunto de n elementos y se los quiere ordenar en forma creciente, existen dos alternativas:
+
+a) Algoritmo que usa una heap y requiere una cantidad aproximada de (n log n) operaciones.
+ ➢ Construir una MinHeap, realizar n DeleteMin operaciones e ir guardando los elementos extraídos en otro arreglo.
+ ➢ Desventaja: requiere el doble de espacio
+
+b) Algoritmo HeapSort que requiere una cantidad aproximada de (n log n) operaciones, pero menos espacio.
+ ➢ Construir una MaxHeap con los elementos que se desean ordenar, intercambiar el último elemento con el primero, decrementar 
+el tamaño de la heap y filtrar hacia abajo. Usa sólo el espacio de almacenamiento de la heap.
