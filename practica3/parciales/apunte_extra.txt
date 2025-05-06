@@ -19,6 +19,47 @@ un camino, por ejemplo, y a su vez, llevar un contador de nivel. o de nodos por 
 5*Pensar si hace falta una estructura auxiliar y crear métodos privados. 
 Por ejemplo: pilas, colas, listas o funciones auxiliares recursivas/iterativas.
 
+consejos: 
+- usar boolean de corte
+- usar iterator
+- si solo hay que devolver un camino, el primero que se encuentre que cumpla x condición, se hace con una sola lista
+- dos listas se usan para buscar caminos min o max pero son para comparar caminos.
+
+----------------------------------------------------------------------------------------------------
+
+Cómo saber el nivel en un recorrido por profundidad
+Usar un parámetro adicional para el nivel:
+
+En el método recursivo, puedes pasar un parámetro adicional que represente el nivel actual.
+Este parámetro se incrementa en cada llamada recursiva al descender en el árbol.
+Actualizar el nivel al retroceder:
+
+Cuando la recursión retrocede (backtracking), el nivel se restaura automáticamente porque el valor 
+del parámetro en la pila de llamadas vuelve al estado anterior.
+Ejemplo de implementación
+Supongamos que tienes un árbol general y quieres imprimir el nivel de cada nodo durante un recorrido 
+por profundidad:
+
+private static void recorrerConNivel(GeneralTree<Integer> nodo, int nivel) {
+    if (nodo == null) {
+        return;
+    }
+
+    // Imprimir el valor del nodo y su nivel
+    System.out.println("Nodo: " + nodo.getData() + ", Nivel: " + nivel);
+
+    // Recorrer los hijos del nodo actual
+    for (GeneralTree<Integer> hijo : nodo.getChildren()) {
+        recorrerConNivel(hijo, nivel + 1); // Incrementar el nivel al descender
+    }
+}
+
+Cómo funciona
+Nivel inicial: La raíz del árbol comienza en el nivel 0.
+Descenso en el árbol: Cada vez que se llama recursivamente al método para un hijo, el nivel se 
+incrementa en 1.
+Retroceso (backtracking): Cuando se termina de procesar un hijo, la recursión retrocede al nodo padre, 
+y el nivel vuelve automáticamente al valor anterior.
 ----------------------------------------------------------------------------------------------------
 
 Apunte Recursión: 
