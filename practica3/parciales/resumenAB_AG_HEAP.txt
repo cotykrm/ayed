@@ -307,3 +307,13 @@ a) Algoritmo que usa una heap y requiere una cantidad aproximada de (n log n) op
 b) Algoritmo HeapSort que requiere una cantidad aproximada de (n log n) operaciones, pero menos espacio.
  ➢ Construir una MaxHeap con los elementos que se desean ordenar, intercambiar el último elemento con el primero, decrementar 
 el tamaño de la heap y filtrar hacia abajo. Usa sólo el espacio de almacenamiento de la heap.
+Para ordenar un arreglo de menor a mayor, armo una max heap con el vector, intercambio el primer elemento (va a ser el mayor) 
+por el último, decremento el tamaño de la heap (pero no del arreglo, con esto voy separando entre lo que es max heap y arreglo),
+luego filtro hacia abajo para mantener la propiedad de orden en la heap, y así sucesivamente hasta que no haya heap y sea todo arreglo.
+Para ordenar de forma decreciente es igual pero con una min heap.
+
+Cantidad de operaciones:
+- Construir la Heap --> O(n.log(n)) -> Insertando de a uno 
+                    \-> O(n) -> BuildHeap
+- Ordenar --> O(n-1) --> intercambios (sin costo)
+- Ordenar --> n-1 --> filtrado hacia abajo por elemento --> O(n.log(n))
