@@ -35,14 +35,53 @@ Un árbol general es de selección si cada GeneralTree<Integer> tiene en su raí
 
 
 /*Implemente la clase ParcialArboles, y el método:
-public static List<Integer> resolver(GeneralTree<Integer> arbol)
+public static List<Integer> caminoFiltradoMaximo(GeneralTree<Integer> arbol)
 que recibe un árbol general de valores enteros, que solo pueden ser 0 o 1 y devuelve una lista con los
 valores que componen el “camino filtrado de valor máximo”, se llama “filtrado” porque sólo se agregan al
 camino los valores iguales a 1 (los 0 no se agregan), mientras que es “de valor máximo” porque se obtiene
-de realizar el siguiente cálculo: es la suma de los valores de los GeneralTree<Integer>s multiplicados por su nivel. De haber
-más de uno, devolver el primero que se encuentre.*/
-    public static List<Integer> resolver(GeneralTree<Integer> arbol){
+de realizar el siguiente cálculo: es la suma de los valores de los GeneralTree<Integer>s multiplicados por 
+su nivel. De haber más de uno, devolver el primero que se encuentre. */
+    
 
+    private static void caminoFiltradoMaximoP(GeneralTree<Integer> arbol, List<Integer> camino, 
+        List<Integer> lista, int[] valorMaximo, int nivel){
+
+            if(arbol!=null){
+            
+                if(arbol.getData() == 1)
+                    lista.add(arbol.getData());
+            
+                if(arbol.isLeaf()){
+                    int valor = 0;
+                    for (int i = 0; i < lista.size(); i++) {
+                        valor += lista.get(i) * nivel;
+                    }
+                    if(valor>valorMaximo[0]){
+                        valorMaximo[0] = valor;
+                        camino.clear();
+                        camino.addAll(lista);
+                    }
+
+                } else {
+                    for (GeneralTree<Integer> child : arbol.getChildren()) {
+                        caminoFiltradoMaximoP(child, camino, lista, valorMaximo, nivel + 1); // Incrementar el nivel al descender
+                    }
+                }
+                lista.remove(lista.size() - 1);
+            }
+    }
+
+    public static List<Integer> caminoFiltradoMaximo(GeneralTree<Integer> arbol){
+        
+        if(arbol != null && !arbol.isEmpty()){
+            List<Integer> camino = new LinkedList<Integer>();
+            List<Integer> lista = new LinkedList<Integer>();
+            int[] valorMaximo = {0};
+            caminoFiltradoMaximoP(null, camino, lista, valorMaximo, 0);
+            return camino;
+        }
+        return new LinkedList<>();
+        
     }
 
 
@@ -74,15 +113,19 @@ exactamente igual a la cantidad de GeneralTree<Integer>s del nivel anterior + 1.
                 else{
                     if(!queue.isEmpty()){
                         queue.enqueue(null);
-                        if(nodosAnt != 0)
-                            if(nodosAc - nodosAnt != 1)
-                                esCreciente = false;
+                        if(nodosAc - nodosAnt != 1)
+                            esCreciente = false;
                         nodosAnt = nodosAc;
                         nodosAc = 0;
                     }
                 }
             
             }
+            
+            if(nodosAc - nodosAnt != 1)
+                esCreciente = false;
+
+
             return esCreciente;
         }
         return false;
@@ -90,7 +133,7 @@ exactamente igual a la cantidad de GeneralTree<Integer>s del nivel anterior + 1.
 
 
     public static void main(String [] args){
-        /*GeneralTree<Integer> n2  = new GeneralTree<Integer>(2);
+        GeneralTree<Integer> n2  = new GeneralTree<Integer>(2);
         GeneralTree<Integer> n1  = new GeneralTree<Integer>(1);
         GeneralTree<Integer> n25 = new GeneralTree<Integer>(25);
         GeneralTree<Integer> n13 = new GeneralTree<Integer>(13);
@@ -128,8 +171,8 @@ exactamente igual a la cantidad de GeneralTree<Integer>s del nivel anterior + 1.
 
         System.out.println("es creciente? "+ resolver1(n2));
 
-        */
-
+        
+        /*
         GeneralTree<Integer> n12_root = new GeneralTree<Integer>(12);
 
         GeneralTree<Integer> n12_left = new GeneralTree<Integer>(35);
@@ -172,5 +215,63 @@ exactamente igual a la cantidad de GeneralTree<Integer>s del nivel anterior + 1.
         n25_right.addChild(n25_leaf);
 
         System.out.println("Es de seleccion? "+esDeSeleccion(n12_root));
+
+            *//*
+
+        GeneralTree<Integer> root = new GeneralTree<Integer>(1);
+
+        GeneralTree<Integer> h1_1 = new GeneralTree<Integer>(0);
+        GeneralTree<Integer> h1_2 = new GeneralTree<Integer>(1);
+        GeneralTree<Integer> h1_3 = new GeneralTree<Integer>(1);
+
+        GeneralTree<Integer> h2_1 = new GeneralTree<Integer>(1);
+        GeneralTree<Integer> h2_2 = new GeneralTree<Integer>(1);
+        GeneralTree<Integer> h2_3 = new GeneralTree<Integer>(1);
+        GeneralTree<Integer> h2_4 = new GeneralTree<Integer>(0);
+        GeneralTree<Integer> h2_5 = new GeneralTree<Integer>(0);
+
+        GeneralTree<Integer> h3_1 = new GeneralTree<Integer>(1);
+        GeneralTree<Integer> h3_2 = new GeneralTree<Integer>(1);
+        GeneralTree<Integer> h3_3 = new GeneralTree<Integer>(1);
+        GeneralTree<Integer> h3_4 = new GeneralTree<Integer>(0);
+        GeneralTree<Integer> h3_5 = new GeneralTree<Integer>(0);
+
+        GeneralTree<Integer> h4_1 = new GeneralTree<Integer>(1);
+        GeneralTree<Integer> h4_2 = new GeneralTree<Integer>(0);
+        GeneralTree<Integer> h4_3 = new GeneralTree<Integer>(0);
+        
+        root.addChild(h1_1);
+        root.addChild(h1_2);
+        root.addChild(h1_3);
+
+        h1_1.addChild(h2_1);
+        h1_1.addChild(h2_2);
+
+        h1_2.addChild(h2_3);
+        h1_2.addChild(h2_4);
+
+        h1_3.addChild(h2_5);
+
+        h2_1.addChild(h3_1);
+        h2_1.addChild(h3_2);
+        h2_1.addChild(h3_3);
+
+        h2_4.addChild(h3_4);
+
+        h2_5.addChild(h3_5);
+
+        h3_4.addChild(h4_1);
+
+        h3_5.addChild(h4_2);
+        h3_5.addChild(h4_3);
+
+        root.porNiveles();
+         
+        List<Integer> camino = caminoFiltradoMaximo(root);
+
+        System.out.println(camino);
+        
+        
+        */
     }
 }
