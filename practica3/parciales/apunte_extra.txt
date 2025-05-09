@@ -175,3 +175,28 @@ Paso a paso:
 | +       | 30 + 48 = 78 → desapilar, operar, apilar    | [78]                   |
 ----------------------------------------------------------------------------------
 
+Pasar de expresión Infija a Postfija:
+
+Reglas generales:
+
+    Si el símbolo es un operando (letra o número), lo agregas directamente a la salida.
+
+    Si es un operador:
+
+        Mientras haya operadores en la pila con mayor o igual precedencia, sácalos a la salida.
+
+        Luego apila el nuevo operador.
+
+    Si es un paréntesis izquierdo (, apílalo.
+
+    Si es un paréntesis derecho ):
+
+        Desapila hasta encontrar el paréntesis izquierdo, que también se descarta.
+
+Precedencia común:
+
+    * y / → mayor
+
+    + y - → menor
+
+    Paréntesis alteran el orden, como siempre.
