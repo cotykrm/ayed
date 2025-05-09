@@ -54,7 +54,7 @@ Sea T un árbol lleno de grado k y altura h, la cantidad de nodos N es (k h+1 �
 Dado un árbol T de grado k y altura h, diremos que T es completo si es lleno de altura h-1 y el nivel h se completa de izquierda a derecha.
 
 ● Cantidad de nodos en un árbol completo:
-Sea T un árbol completo de grado k y altura h, la cantidad de nodos N varía entre (k h +k -2) / (k-1) y (k h+1 – 1) / (k-1)
+Sea T un árbol completo de grado k y altura h, la cantidad de nodos N varía entre (k^h +k-2) / (k-1) y (k^h+1 – 1) / (k-1)
 
 Recorridos
 ● Preorden: Se procesa primero la raíz y luego los hijos
