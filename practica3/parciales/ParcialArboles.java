@@ -20,19 +20,17 @@ public class ParcialArboles {
         this.arbol = arbol;
     }
 
-    public static boolean camino (GeneralTree<Integer> arbol,List<Integer> cam,List<Integer> lista, int num){
+    public static boolean camino (GeneralTree<Integer> arbol,List<Integer> lista, int num){
         lista.add(arbol.getData());
         
         if(arbol.isLeaf()){
-            cam.clear();
-            cam.addAll(lista);
             return true;
         }
         
         List<GeneralTree<Integer>> children = arbol.getChildren();
         if(children.size()>= num){
             for(GeneralTree<Integer> child : children){
-                if(camino(child,cam,lista,num))
+                if(camino(child,lista,num))
                   return true;
             }
         }
@@ -42,10 +40,9 @@ public class ParcialArboles {
 
     public List<Integer> camino (int num){
         if(this.arbol != null && !this.arbol.isEmpty()){
-            List<Integer> cam = new LinkedList<>();
             List<Integer> lista = new LinkedList<>();
-            if(camino(this.arbol, cam, lista, num))
-                return cam;
+            if(camino(this.arbol, lista, num))
+                return lista;
         }
         return new LinkedList<>();
         
@@ -89,7 +86,7 @@ public class ParcialArboles {
 
 
         ParcialArboles prueba = new ParcialArboles(n10);
-        System.out.println(prueba.camino(2));
+        System.out.println(prueba.camino(1));
         
 
     }
