@@ -1,0 +1,247 @@
+1.a.
+para cuentas = 1000
+procesarMovimientos: 0.032 segundos
+procesarMovimientosOptimizado: 0.0 segundos
+
+para cuentas = 10000
+procesarMovimientos: 0.691 segundos
+procesarMovimientosOptimizado: 0.008 segundos
+
+para cuentas = 25000
+procesarMovimientos: 7.308 segundos
+procesarMovimientosOptimizado: 0.015 segundos
+
+para cuentas = 50000
+procesarMovimientos: 35.792 segundos
+procesarMovimientosOptimizado: 0.032 segundos
+
+para cuentas = 100000
+procesarMovimientos: 132.784 segundos
+procesarMovimientosOptimizado: 0.056 segundos
+
+1.b.
+- ¿Por qué procesarMovimientos es tan ineficiente? Tenga en cuenta que pueden existir millones
+de movimientos diarios que abarquen gran parte de las cuentas bancarias.
+la ineficiencia se debe a que en este método tenemos dos for anidados, por lo tanto el t(n) es de orden 2.
+     n        n
+cte+ Σ cte*   Σ  cte 
+    i=1      j=1  
+
+1.c.
+¿En qué se diferencia procesarMovimientosOptimizado? Observe las operaciones que se
+realizan para cada consulta.
+se diferencia en que este metodo realiza la solucion con dos for separados, termina siendo de orden lineal.
+en el primer for toma para cada consulta
+
+
+2) La clase BuscadorEnArrayOrdenado del material adicional (Ejercicio 2 - Tiempo.zip) resuelve el
+problema de buscar un elemento dentro de un array ordenado. El mismo problema, lo resuelve de
+dos maneras diferentes: búsqueda lineal y búsqueda dicotómica.
+Se define la variable cantidadElementos, la cual se va modificando para determinar una escala (por
+ejemplo de a 100.000 o 1.000.000, dependiendo de la capacidad de cada equipo). Realice una tabla
+con el tiempo que tardan en ejecutarse ambos algoritmos, para los distintos valores de la variable.
+Por ejemplo:
+N Lineal Dicotómica
+100.000 = lineal iteraciones=100000 tiempo=2; dicotomica iteraciones=16 tiempo=0
+200.000 = lineal iteraciones=200000 tiempo=2; dicotomica iteraciones=17 tiempo=0
+300.000 = lineal iteraciones=300000 tiempo=2; dicotomica iteraciones=18 tiempo=0
+400.000 = lineal iteraciones=400000 tiempo=3; dicotomica iteraciones=18 tiempo=0
+500.000 = lineal iteraciones=500000 tiempo=3; dicotomica iteraciones=18 tiempo=0
+800.000 = lineal iteraciones=800000 tiempo=4; dicotomica iteraciones=19 tiempo=0
+2.000.000 = lineal iteraciones=2000000 tiempo=4; dicotomica iteraciones=20 tiempo=0
+
+3) En la documentación de la clase arrayList que se encuentra en el siguiente link
+https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html
+Se encuentran las siguientes afirmaciones
+● "The size, isEmpty, get, set, iterator, and listIterator operations run in constant time.”
+● “All of the other operations run in linear time (roughly speaking)”
+Explique con sus palabras por qué cree que algunas operaciones se ejecutan en tiempo constante y
+otras en tiempo linea
+
+4) 
+a. 3^n es de O(2^n) dado que 3^n es cota superior de 2^n, cuanto mayor la base, mayor orden.
+b. n+ log2(n) es de O(n) dado que n+ log2(n) es cota superior de O(n)
+c. n^1/2 + 10^20 es de O (n^1/2)
+d. {3n +17, n < 100
+   {317, n >= 100
+    es lienal?
+e. Mostrar que p(n)=3n^5 + 8n^4 + 2n +1 es O(n5). la cota superior de una funcion polinomica es el grado del polinomio.
+f. Si p(n) es un polinomio de grado k, entonces p(n) es O(n^k), verdadero.
+
+5) 
+Se necesita generar una permutación random de los n primeros números enteros. Por ejemplo
+[4,3,1,0,2] es una permutación legal, pero [0,4,1,2,4] no lo es, porque un número está duplicado
+(el 4) y otro no está (el 3). Presentamos tres algoritmos para solucionar este problema. Asumimos
+la existencia de un generador de números random, ran_int (i,j) el cual genera en tiempo constante,
+enteros entre i y j inclusive con igual probabilidad (esto significa que puede retornar el mismo valor
+más de una vez). También suponemos el mensaje swap() que intercambia dos datos entre sí.
+
+public class EjercicioPermutaciones {
+    private static Random rand = new Random();
+    
+    public static int[] randomUno(int n) {
+        int i, x = 0, k;
+        int[] a = new int[n];
+        for (i = 0; i < n; i++) { //esto se realiza por cada elemento del vector
+            boolean seguirBuscando = true;
+            while (seguirBuscando) {
+                x = ran_int(0, n - 1); //genero random
+                seguirBuscando = false;
+                for (k = 0; k < i && !seguirBuscando; k++)
+                    if (x == a[k]) //si el random que se genero, es igual, tengo que seguir buscando otro numero
+                        seguirBuscando = true;
+            }
+            a[i] = x; //ubico el numero random en el vector
+        }
+        return a;
+    }
+
+    public static int[] randomDos(int n) {
+        int i, x;
+        int[] a = new int[n];
+        boolean[] used = new boolean[n];
+        for (i = 0; i < n; i++) 
+            used[i] = false; //inicializo el vector de booleans en false
+        for (i = 0; i < n; i++) { //esto se realiza por cada elemento del vector
+            x = ran_int(0, n - 1); //genero random
+            while (used[x]) //mientras en numero que tengo, sea verdadero
+                x = ran_int(0, n - 1);// genero otro random
+            a[i] = x; //coloco el random en el vector
+            used[x] = true; //marco como usado ese numero
+        }
+        return a;
+    }
+
+    public static int[] randomTres(int n) {
+        int i;
+        int[] a = new int[n];
+        for (i = 0; i < n; i++)  //esto se realiza por cada elemento del vector
+            a[i] = i; //inicializo al elemento con du indice
+        for (i = 1; i < n; i++) 
+            swap(a, i, ran_int(0, i - 1)); //intercambio el indice por un random entre 0 y el indice-1
+        return a;
+    }
+
+    private static void swap(int[] a, int i, int j) {
+        int aux;
+        aux = a[i]; 
+        a[i] = a[j]; 
+        a[j] = aux;
+    }
+/** Genera en tiempo constante, enteros entre i y j con igual probabilidad.
+*/
+    private static int ran_int(int a, int b) {
+        if (b < a || a < 0 || b < 0) throw new IllegalArgumentException("Parametros
+            invalidos");
+        return a + (rand.nextInt(b - a + 1));
+    }
+    public static void main(String[] args) {
+        System.out.println(Arrays.toString(randomUno(1000)));
+        System.out.println(Arrays.toString(randomDos(1000)));
+        System.out.println(Arrays.toString(randomTres(1000)));
+    }
+}
+a. Analizar si todos los algoritmos terminan o alguno puede quedar en loop infinito.
+b. Describa con palabras la cantidad de operaciones que realizan.
+
+  randomUno es de O(n^3) y puede quedar en un bucle infinito si la funcikon random nunca devuelve 
+  el/los numeros que necesitamos para completar la secuencia 
+
+  Σ(for externo) * Σ(while) * Σ(for interno)
+  
+  randomDos es de O(n^2) y puede quedar en un bucle infinito si la funcikon random nunca devuelve 
+  el/los numeros que necesitamos para completar la secuencia
+
+  Σ(for inicializacion) + Σ(for externo) * Σ(while)
+
+  randomTres es de O(n) y no puede quedar en un bucle infinito, dado que la funcion random la 
+  utiliza solo para alternar la secuencia, pero los numeros correspondientes ya los tiene debido 
+  a la inicializacion
+
+  Σ(for inicializacion) + Σ(for swap)
+
+6)
+a.- Supongamos que tenemos un algoritmo de O(log2 n) y disponemos de 1 hora de uso de CPU. En
+esa hora, la CPU puede ejecutar el algoritmo con una entrada de tamaño n= 1024 como máximo.
+¿Cuál sería el mayor tamaño de entrada que podría ejecutar nuestro algoritmo si disponemos de 4
+horas de CPU?
+t(1024) = log2 1024 = 10unidades
+1h ---> 10unidades
+4h ---> 40unidades
+t(n) = log2 n = 40unidades -> n = 2^40 = 1.099.511.627.776
+
+b.- Considerando que un algoritmo requiere T(n) operaciones para resolver un problema y la
+computadora procesa 10.000 operaciones por segundo. Si T(n) = n^2, determine el tiempo en
+segundos requerido por el algoritmo para resolver un problema de tamaño n=2.000.
+t(2000) = 2000^2 = 4.000.000op
+10.000op por segundo
+4.000.000op/10.000opxSeg = 400 segundos
+
+7) Para cada uno de los siguientes fragmentos de código, calcule, intuitivamente, el orden del tiempo de
+ejecución.
+
+-----------------------------------------------------------
+a)
+
+for(int i = 0; i< n; i++)
+    sum++;
+
+O(n);
+
+-----------------------------------------------------------
+b)
+
+for(int i = 0; i< n; i+=2)
+    sum++;
+
+O(n/2);
+
+----------------------------------------------------------
+c)
+
+for(int i = 0; i< n; i++)
+    for(int j = 0; j< n; j++)
+        sum++;
+
+O(n^2);
+
+----------------------------------------------------------
+d)
+
+for(int i = 0; i < n + 100; ++i) {
+    for(int j = 0; j < i * n ; ++j){
+        sum = sum + j;
+    }
+    for(int k = 0; k < n + n + n; ++k){
+        c[k] = c[k] + sum;
+    }
+}
+
+O(n^2)
+
+----------------------------------------------------------
+e)
+
+for(int i = 0; i< n; i++)
+    for(int j = 0; j< n; j++)
+        sum++;
+for(int i = 0; i< n; i++)
+    sum++
+
+O(n^2)
+
+----------------------------------------------------------
+f)
+
+int i,j;
+int x = 1;
+    for (i = 0; i <= n2; i=i+2)
+        for (j = n; j >= 1; j-= n/4)
+            x++;
+
+O()
+
+----------------------------------------------------------
+
+
+
