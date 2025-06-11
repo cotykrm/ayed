@@ -1,0 +1,284 @@
+ordenacion topologica
+es una lista de vertices, es una permutacion
+si se recorre en ese orden los vertices, se recorren todos los vertices
+definicion:
+●La ordenación topológica es una permutación:
+    v1, v2, v3, ..., v|V| de los vértices, tal que si (vi,vj) Є E,
+    vi ≠ vj, entonces vi precede a vj en la permutación.
+
+● para que se puedad correr un orden topologico, no puede haber ciclos
+● La ordenación topológica no es única. puede haber varias permutaciones, recorridos posibles
+● Una ordenación topológica es como una ordenación de
+los vértices a lo largo de una línea horizontal, con los
+arcos de izquierda a derecha
+solo se pueden comanzar con los vertices que solo tienen grado de entrada 0, 
+no depende de ningun otro nodo para comenzar el orden
+cuando llego a un nodo con el que no puedo avanzar, debo seguir por otro vertice 
+de grado de entrada 0.
+
+aplicaciones:
+● Para indicar la precedencia entreeventos
+● Para planificación de tareas
+● Organización curricular
+
+algoritmo 1
+
+En esta versión el algoritmo utiliza un arreglo Grado_in en
+el que se almacenan los grados de entradas de los vértices
+y en cada paso se toma de allí un vértice con grado_in = 0.
+
+Pasos generales:
+1. Seleccionar un vértice v con grado de entrada cero
+2. Visitar v
+3. “Eliminar” v, junto con sus aristas salientes
+(deberia marcar como visitado el vertice y restar 1 a los vertices "dependiente" del vertice visitado)
+4. Repetir el paso 1 hasta seleccionar todos los vértices
+como el arrglo se recorre secuenialmente, por algoritmia, se va a resolver "ordenado"
+
+codigo:
+int sortTopologico( ){
+    int numVerticesVisitados = 0;
+    while(haya vertices para visitar){   O(V^2+E)
+        if(no existe vertice con grado_in = 0)
+            break;
+        else{
+            seleccionar un vertice v con grado_in = 0;   O(V)
+            visitar v; //mandar a la salida
+            numVerticesVisitados++;
+            borrar v y todas sus aristas salientes;  O(E)
+        }
+    }    
+    return numVerticesVisitados;
+}
+O(V^2+E)
+este algoritmo es de orden cuadrado O(n^2)
+porque recorro todos los vertices buscando uno con trado de entrada 0, pero para cada vertice
+
+algoritmo 2
+
+En esta versión el algoritmo utiliza un arreglo
+Grado_in en el que se almacenan los grados de
+entradas de los vértices y una pila P (o una cola
+Q) en donde se almacenan los vértices con grados
+de entrada igual a cero.
+
+depende si usamos una pila o una cola, cambia el orden topolocigo.
+
+codigo:
+
+int sortTopologico( ){
+    int numVerticesVisitados = 0;
+    while(haya vertices para visitar){  O(V+E)
+        if(no existe vertice con grado_in = 0)
+            break;
+        else{
+            seleccionar un vertice v con grado_in = 0; O(1)
+            visitar v; //mandar a la salida
+            numVerticesVisitados++;
+            borrar v y todas sus aristas salientes;
+            -> si noto que un vertice queda en grado de entrada 0, lo apilo  O(E)
+        }
+    }
+    return numVerticesVisitados;
+}
+
+
+algoritmo 3
+→ En esta versión se aplica el recorrido en profundidad
+● Se realiza un recorrido DFS, marcando cada vértice en
+post-orden, es decir, una vez visitados todos los vértices a
+partir de uno dado, el marcado de los vértices en
+post-orden puede implementarse según una de las sig.
+opciones:
+a) numerándolos antes de retroceder en el recorrido;
+luego se listan los vértices según sus números de
+post-orden de mayor a menor.
+b) colocándolos en una pila P, luego se listan empezando
+por el tope.
+
+
+
+ultima clase
+
+Camino de costo mínimo
+Definición
+Sea G=(V,A) un grafo dirigido y pesado, el costo c(i,j) está asociado
+a la arista v(i,j).
+Dado un camino: v1, v2, v3,…….vN
+El costo del camino es:
+       N-1 
+    C = Σ  c(i,i+1)
+       i=1
+Este valor también se llama longitud del camino pesado.
+La longitud del camino no pesado es la cantidad de aristas que hay en el camino
+
+El camino de costo mínimo desde un vértice vi a otro vértice vj
+es aquel en que la suma de los costos de las aristas es mínima.
+
+Esto significa que: 
+
+       N-1 
+    C = Σ  c(i,i+1)  es minima
+       i=1
+
+
+Algoritmos de Caminos mínimos
+Los algoritmos calculan los caminos mínimos desde un vértice origen s a todos los 
+restantes vértices del grafo. (nos devuleven el "tamaño" del camino, no  nos devuelven el camino)
+
+grafos no pesados:
+
+● Para cada vértice v se mantiene la siguiente
+información:
+○ Dv: distancia mínima desde el origen s (inicialmente ∞
+para todos lo vértices excepto el origen con valor 0)
+○ Pv: vértice por donde paso para llegar
+○ Conocido : dato booleano que me indica si está procesado
+(inicialmente todos en 0)
+(este último campo no va a ser necesario para esta clase de grafos)
+● Estrategia: Recorrido en amplitud (BFS)
+Pasos:
+○ Avanzar por niveles a partir del origen, asignando
+distancias según se avanza (se utiliza una cola)
+○ Inicialmente, es Dw=∞. Al inspeccionar w se reduce al valor correcto Dw = Dv+1
+cuando se enconlan los adyacentes del vertice, si, el costo de v2 es mayor que v1,
+entonces reemplazo el costo de v2 por el costo de v1+1.
+asi acumulo la cantidad de vertices por los que pasé a medida que avancé en el camino,
+al comprobar si es menor, siempre me quedo com el camino minimo.
+○ Desde cada v, visitamos a todos los nodos adyacentes a v
+si el vertice ya esta marcado como visitado, significa que no es infinito el valor, entonces no
+haria falta el vector de visitados
+
+Camino_min_GrafoNoPesado(G,s) {
+    para cada vértice v Є V
+        Dv = ∞; 
+        Pv = 0; 
+        Conocv = 0;
+    Ds = 0; Encolar (Q,s); 
+    Conocs = 1;
+    Mientras (not esVacio(Q)){
+        Desencolar (Q,u);
+        para c/vértice w Є V adyacente a u {
+            si (w no es conocido) {
+                Dw = Du + 1;
+                Pw = u;
+                Encolar(Q,w); 
+                Conocw = 1;
+            }
+        }
+    }
+ }
+
+grafos pesados
+Estrategia: Algoritmo de Dijkstra
+Pasos:
+○ Dado un vértice origen s, elegir el vértice v que esté a la menor distancia de s, 
+dentro de los vértices no procesados
+○ Marcar v como procesado
+○ Actualizar la distancia de w adyacente a v
+
+● Para cada vértice v mantiene la siguiente
+información:
+○ Dv: distancia mínima desde el origen (inicialmente ∞ para todos lo vértices excepto 
+el origen con valor 0)
+○ Pv: vértice por donde paso para llegar
+○ Conocido : dato booleano que me indica si está procesado
+(inicialmente todos en 0)
+
+● La actualización de la distancia de los adyacentes
+w se realiza con el siguiente criterio:
+
+Distancia de s a w   Distancia de s a w,
+(sin pasar por v)    pasando por v
+             _|_    ____|______
+○ Se compara Dw con Dv + c(v,w)
+○ Se actualiza si Dw > Dv + c(v,w) 
+(si la distancia que esta en la tabla como menor distancia(Dw), es mayor que la distancia de s a w pasando por v(Dv)
+entonces se actualiza la tabla y hay una nueva distancia minima)
+cuando termino de actualizar la tabla con todos los adyacentes del origen, tomo como vertice para procesar el 
+vertice con menor distancia desde el origen, se marca como conocido y se toman sus adyacentes, y se repite el proceso.
+cuando se marca un vertice como visitado significa que ya tengo el camino minimo, y que ningun otro camino va 
+a ser menor y lo va a actualizar
+
+Dijkstra(G,w, s){
+    para cada vértice v Є V{
+        Dv = ∞; 
+        Pv = 0;
+        Ds = 0;
+    }
+(4) para cada vértice v Є V {
+(5)     u = vérticeDesconocidoMenorDist;
+        Marcar u como conocido;
+(7)     para cada vértice w Є V adyacente a u
+        si (w no está conocido){
+            si (Dw > Du + c(u,w)) {
+                Dw = Du + c(u,w);
+                Pw = u;
+            }
+        }
+    }
+}
+
+para cualcular el costo minimo desde x vertice al origen se utiliza la tabla
+
+el algoritmos de dijkstra solo sirve para grafos con pesos positivos(o negativos y positivos)
+
+
+Algoritmo de Dijkstra - Tiempo de ejecución (I)
+Si almacenamos las distancias en un vector, tendremos que :
+● El bucle para de la línea (4) se ejecuta para todos los vértices → |V| iteraciones
+● La operación vérticeDesconocidoMenorDist -línea (5)- es O(|V|) y dado que se realiza |V| veces
+→ el costo total de vérticeDesconocidoMenorDist es O(|V|^2)
+● El bucle para de la línea (7) se ejecuta para los vértices adyacentes de cada
+vértice. El número total de iteraciones será la cantidad de aristas del grafo. → |E| iteraciones
+● El costo total del algoritmo es (|V|^2 + |E| ) es O(|V|^2) 
+
+Algoritmo de Dijkstra (II) - Usando una Min - Heap
+
+
+
+consultas
+
+temas del parcial
+
+tiempos de ejecucion
+- definiciones 
+- propiedades
+- calcular tiempo de ejecucion de algoritmos ya vistos
+- calcular tiempo de ejecucion de fragmentos de codigo
+- casos iterativos, tiempo y orden
+- casos recursivos, encontrar el orden a partir de la resolusion del t(n)
+
+grafos
+- recorridos (profundidad, amplitud)
+- aplicaciones del encontrar componentes conexas
+depende si es dirigido o no (ida y vuelta)
+- sort topologico (grafos de pre requisito) grafo dirigido aciclico 
+los 3 algoritmos y sus ordenes de ejecucion
+- algoritmos de caminos minimos
+grafos no pesados - bfs
+grafos pesados con peso positivos - dijkstra
+pesos positivos y negativos - dijkstra con cola adicional
+grafo dirigido aciclico
+caminos mínimos entre todos los pares de vértices - floyd 
+orden cubico (es como usar el algoritmo de dijkstra varias veces)
+
+ejercicio teoria, encontrar algo o aplicar algo y mostrar el procedimiento -> es muy importante
+al trabajar con adyacentes, se da un orden y se debe resolver tomando cada adyacente ordenado 
+por el criterio necesario(alfabetico, de menor a mayor, etc)
+
+practica
+si piden esquivar algun obstaculo, no se puede aplicar dijkstra,
+se debe utilizar un DFS
+
+kosaraju - sirve para grafos dirigidos
+- enumerar los vertices en posorden
+- hacer el grafo con las aristas invertidas (invierto el sentido)
+- hago el recorrido de nuevo pero comenzando desde el vertice con mayor valor (de orden)
+- cuando llego a uno que no tiene adyacentes, ese vertice es una componente conexa
+
+para sacar componentes conexas, largo todo el grafo con el bfs, o el dfs y cuento cada vez que entra y sale.
+si fue solo 1 significa que el grafo es conexo
+si en una lista guardo los vertices recorridos por qcada vez que entra y sale del dfs/bfs, terminaria 
+teniendo las componentes conexas
+
