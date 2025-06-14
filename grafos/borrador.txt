@@ -1,0 +1,23 @@
+boolean[] marca,  List<Persona> lista, List<Persona> radio){
+        int pos = persona.getPosition();
+        marca[pos] = true;
+        if(!persona.getData().getYaCobro()){
+            lista.add(persona.getData());
+            persona.getData().setYaCobro(true);
+        }
+        if(lista.size() == 2){
+            radio.addAll(lista);
+            return true;
+        }
+        List<Edge<Persona>> adyc = grafo.getEdges(persona);
+        for(Edge<Persona> e : adyc){
+            Vertex<Persona> jubilado = e.getTarget();
+            int j = jubilado.getPosition();
+            int peso = e.getWeight();
+            if(!marca[j] && distancia - peso>= 0){
+                repartir(grafo, jubilado, distancia-peso, marca, lista, radio);
+            }
+        }
+        //lista.remove(lista.size()-1);
+        return false;
+
