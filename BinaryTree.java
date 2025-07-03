@@ -112,11 +112,11 @@ public class BinaryTree <T> {
         
         
     public BinaryTree<T> espejo(BinaryTree<T> ab){
-        Queue <T> cola  = new Queue(); 
+        Queue <T> cola  = new Queue<T>(); 
         if(!ab.isEmpty()){
             espejo_private(ab,cola);
             BinaryTree <T> espejado = new BinaryTree<T>();
-            espejar_private(espejado,cola);
+            espejo_private(espejado,cola);
             return espejado;
         }else
  	   return null;
@@ -128,13 +128,6 @@ public class BinaryTree <T> {
             espejo_private(ab.getLeftChild(),cola);
         if(ab.hasRightChild())
             espejo_private(ab.getRightChild(),cola); 
-    }
-    
-    private void espejar_private(BinaryTree<T> ab, Queue<T> cola){
-        
-        
-        ab.data = cola.dequeue();
-        
     }
 
     // 0<=n<=m
@@ -214,6 +207,6 @@ public class BinaryTree <T> {
             }
         }
         return lleno;
-}
+    }
 }
 

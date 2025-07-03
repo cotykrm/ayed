@@ -5,7 +5,7 @@
  */
 package practica2;
 
-import practica1.ejercicio8.Queue;
+//import practica1.ejercicio8.Queue;
 
 /**
  *
@@ -23,26 +23,30 @@ public class Transformacion {
         this.arbol = data;
     }
     
-    public BinaryTree<Integer> suma() {
-        transformar(arbol);
-        return arbol;
-    }
-    
     private int transformar(BinaryTree<Integer> ab){
-        if(ab == null)
-            return 0;
         if(ab.isLeaf()){
             int val = ab.getData();
             ab.setData(0);
             return val;
         }
-        int sumaIz = transformar(ab.getLeftChild());        
-        int sumaDe = transformar(ab.getRightChild());
-        int valorOriginal = ab.getData();
-        ab.setData(sumaIz + sumaDe);   
+        int izq = 0;
+        int der = 0;
+        if(ab.hasLeftChild()){
+            izq += transformar(ab.getLeftChild());
+        }
+        if(ab.hasRightChild()){
+            der += transformar(ab.getRightChild());
+        }
+        int original = ab.getData();
+        ab.setData(izq+der);
+        return original+ab.getData();
 
-        return ab.getData() + valorOriginal;
-       
+    }
+
+    public BinaryTree<Integer> transformacion() {
+        if(this.arbol != null && !this.arbol.isEmpty())
+            transformar(arbol);
+        return arbol;
     }
     
     public static void main(String[] args){
@@ -59,7 +63,7 @@ public class Transformacion {
         ab2.addRightChild(hd);
         //ab2.preOrden();
         Transformacion ab = new Transformacion(ab2);
-        BinaryTree<Integer> resultado = ab.suma();
+        BinaryTree<Integer> resultado = ab.transformacion();
         resultado.preOrden();
         
     }
